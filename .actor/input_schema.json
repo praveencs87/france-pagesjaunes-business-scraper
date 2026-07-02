@@ -1,0 +1,36 @@
+{
+    "title": "France PagesJaunes Scraper Input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "keyword": {
+            "title": "Search Query (Quoi, qui ?)",
+            "type": "string",
+            "description": "The specific business category or name (e.g., 'agence immobilière', 'restaurant', 'plombier').",
+            "editor": "textfield",
+            "prefill": "agence immobilière"
+        },
+        "location": {
+            "title": "Location (Où ?)",
+            "type": "string",
+            "description": "City, department, or region in France (e.g., 'Paris', 'Lyon', 'Marseille').",
+            "editor": "textfield",
+            "prefill": "Paris"
+        },
+        "maxLeads": {
+            "title": "Maximum Leads",
+            "type": "integer",
+            "description": "Maximum number of French business leads to extract.",
+            "default": 100,
+            "minimum": 1
+        },
+        "proxyConfiguration": {
+            "title": "Proxy Configuration",
+            "type": "object",
+            "description": "Proxy settings. Apify Residential Proxy (France targeted) is highly required.",
+            "prefill": { "useApifyProxy": true },
+            "editor": "proxy"
+        }
+    },
+    "required": ["keyword", "location"]
+}
