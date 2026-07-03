@@ -55,10 +55,10 @@ try {
 
                 const nameElement = await item.$('.bi-header-title, .denomination-links, .bi-denomination');
                 if (!nameElement) continue;
-                const businessName = (await nameElement.innerText()).trim();
+                const businessName = (await nameElement.innerText()).replace(/Ouvrir la tooltip/g, '').trim().split('\n')[0].trim();
 
                 const addressElement = await item.$('.bi-address, .adresse, .bi-contact-zone .adresse');
-                const address = addressElement ? (await addressElement.innerText()).trim().replace(/\s+/g, ' ') : '';
+                const address = addressElement ? (await addressElement.innerText()).replace(/Voir le plan/g, '').replace(/\s+/g, ' ').trim() : '';
 
                 // Category
                 const catElement = await item.$('.bi-category, .activite, .bi-activite');
