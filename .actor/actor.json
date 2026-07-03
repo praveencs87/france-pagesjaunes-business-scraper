@@ -3,11 +3,11 @@
   "name": "france-pagesjaunes-business-scraper",
   "title": "France PagesJaunes Scraper | B2B Leads",
   "description": "Extract verified French businesses, real estate agencies, and local services from PagesJaunes.fr. Premium EU B2B leads.",
-  "version": "1.0",
+  "version": "1.1",
   "input": "./input_schema.json",
   "dockerfile": "./Dockerfile",
-  "minMemoryMbytes": 1024,
-  "maxMemoryMbytes": 4096,
+  "minMemoryMbytes": 512,
+  "maxMemoryMbytes": 1024,
   "pricingModel": "PAY_PER_EVENT",
   "pricingEvents": [
     {
@@ -17,8 +17,8 @@
     },
     {
       "eventName": "lead-extracted",
-      "pricePerEvent": 0.004,
-      "description": "Charged per French Business lead successfully extracted ($4.00 per 1k leads)"
+      "pricePerEvent": 0.005,
+      "description": "Charged per French Business lead successfully extracted ($5.00 per 1k leads)"
     }
   ],
   "isPublic": true,
@@ -32,7 +32,7 @@
   "defaultRunOptions": {
     "build": "latest",
     "timeoutSecs": 1800,
-    "memoryMbytes": 4096
+    "memoryMbytes": 1024
   },
   "storages": {
     "dataset": "./dataset_schema.json"
