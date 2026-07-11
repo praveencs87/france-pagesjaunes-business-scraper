@@ -3,19 +3,14 @@
     "type": "object",
     "schemaVersion": 1,
     "properties": {
-        "keyword": {
-            "title": "Search Query (Quoi, qui ?)",
-            "type": "string",
-            "description": "The specific business category or name (e.g., 'agence immobilière', 'restaurant', 'plombier').",
-            "editor": "textfield",
-            "prefill": "agence immobilière"
-        },
-        "location": {
-            "title": "Location (Où ?)",
-            "type": "string",
-            "description": "City, department, or region in France (e.g., 'Paris', 'Lyon', 'Marseille').",
-            "editor": "textfield",
-            "prefill": "Paris"
+        "startUrls": {
+            "title": "Start URLs",
+            "type": "array",
+            "description": "List of PagesJaunes search URLs to scrape.",
+            "editor": "requestListSources",
+            "prefill": [
+                { "url": "https://www.pagesjaunes.fr/recherche/paris-75/agence-immobiliere" }
+            ]
         },
         "maxLeads": {
             "title": "Maximum Leads",
@@ -32,5 +27,5 @@
             "editor": "proxy"
         }
     },
-    "required": ["keyword", "location"]
+    "required": ["startUrls"]
 }

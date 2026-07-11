@@ -7,8 +7,7 @@ await Actor.init();
 try {
     const input = await Actor.getInput();
     const { 
-        keyword = 'plombier', 
-        location = 'paris', 
+        startUrls = [],
         maxLeads = 100,
         proxyConfiguration 
     } = input || {};
@@ -19,7 +18,7 @@ try {
         apifyProxyCountry: 'FR'
     });
 
-    log.info(`Searching PagesJaunes (France) for "${keyword}" in "${location}"`);
+    log.info(`Searching PagesJaunes (France)...`);
     
     await Actor.charge({ eventName: 'apify-actor-start', count: 1 });
 
@@ -74,7 +73,7 @@ try {
                 const address = addressElement ? (await addressElement.innerText()).replace(/Voir le plan/g, '').replace(/\s+/g, ' ').trim() : '';
 
                 const catElement = await item.$('.bi-category, .activite, .bi-activite');
-                const industry = catElement ? (await catElement.innerText()).trim() : keyword;
+                const industry = catElement ? (await catElement.innerText()).trim() : '';
 
                 const phoneElement = await item.$('a[href^="tel:"], .bi-contact-tel, .number-contact');
                 let phone = '';
@@ -125,11 +124,14 @@ try {
         }
     });
 
-    const formatKeyword = encodeURIComponent(keyword.replace(/\s+/g, '-').toLowerCase());
-    const formatLocation = encodeURIComponent(location.replace(/\s+/g, '-').toLowerCase());
-    const startUrl = `https://www.pagesjaunes.fr/recherche/${formatLocation}/${formatKeyword}`;
-    
-    await crawler.addRequests([{ url: startUrl }]);
+    if (startUrls && startUrls.length > 0) {
+        for (const req of startUrls) {
+            await crawler.addRequests([{ url: typeof req === 'string' ? req : req.url }]);
+        }
+    } else {
+        log.warning('No startUrls provided. Using default.');
+        await crawler.addRequests([{ url: 'https://www.pagesjaunes.fr/recherche/paris-75/agence-immobiliere' }]);
+    }
 
     armKillSwitch(crawler);
     await crawler.run();
